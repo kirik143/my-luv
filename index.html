@@ -12,26 +12,26 @@
     <div class="pinterest-grid">
       <!-- Карточка 1 -->
       <div class="pin-card">
-        <div class="photo-frame">
-          <img src="images/photo_in_car.jpg" alt="Катаимся" onclick="showText(this, 'катаимся1', '24.07.2023')">
+        <div class="photo-content">
+          <img src="images/photo_in_car.jpg" alt="Поездка домой" onclick="showText(this, 'Поездка домой', '24.07.2023')">
+          <div class="text-bubble" id="text1">
+            <span class="close" onclick="hideText('text1')">&times;</span>
+            <div class="typed-text" id="typed1"></div>
+          </div>
         </div>
         <div class="date">24.07.2023</div>
       </div>
       
       <!-- Карточка 2 -->
       <div class="pin-card">
-        <div class="photo-frame">
-          <img src="images/photo_reshetnik_kirya_solo.jpg" alt="решетник" onclick="showText(this, 'решетник2', '13.07.2023')">
+        <div class="photo-content">
+          <img src="images/photo_reshetnik_kirya_solo.jpg" alt="Парк" onclick="showText(this, 'Прогулка в парке', '13.07.2023')">
+          <div class="text-bubble" id="text2">
+            <span class="close" onclick="hideText('text2')">&times;</span>
+            <div class="typed-text" id="typed2"></div>
+          </div>
         </div>
         <div class="date">13.07.2023</div>
-      </div>
-    </div>
-    
-    <!-- Окошко с текстом -->
-    <div id="textModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="hideText()">&times;</span>
-        <div id="typedText" class="typing-text"></div>
       </div>
     </div>
   </div>
