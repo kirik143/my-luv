@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Наши моменты</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -11,11 +12,12 @@
     
     <div class="pinterest-grid">
       <!-- Карточка 1 -->
-      <div class="pin-card">
+      <div class="pin-card" id="card1">
         <div class="photo-content">
-          <img src="images/photo_in_car.jpg" alt="Поездка домой" onclick="showText(this, 'Поездка домой', '24.07.2023')">
-          <div class="text-bubble" id="text1">
-            <span class="close" onclick="hideText('text1')">&times;</span>
+          <img src="images/photo_in_car.jpg" alt="Поездка домой" 
+               onclick="showText('card1', 'Это был четверг, Женечка очень устала и они с Кирюхой решили поехать домой на машине, было клево, музыку слушали, обнимались, видосы всякие снимали, прям такая мили мили поездка.', '24.07.2025')">
+          <div class="text-bubble" id="bubble1">
+            <span class="close" onclick="hideText('card1')">&times;</span>
             <div class="typed-text" id="typed1"></div>
           </div>
         </div>
@@ -23,19 +25,51 @@
       </div>
       
       <!-- Карточка 2 -->
-      <div class="pin-card">
+      <div class="pin-card" id="card2">
         <div class="photo-content">
-          <img src="images/photo_reshetnik_kirya_solo.jpg" alt="Парк" onclick="showText(this, 'Прогулка в парке', '13.07.2023')">
-          <div class="text-bubble" id="text2">
-            <span class="close" onclick="hideText('text2')">&times;</span>
+          <img src="images/photo_reshetnik_kirya_solo.jpg" alt="Парк" 
+               onclick="showText('card2', 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.', '13.07.2023')">
+          <div class="text-bubble" id="bubble2">
+            <span class="close" onclick="hideText('card2')">&times;</span>
             <div class="typed-text" id="typed2"></div>
           </div>
         </div>
         <div class="date">13.07.2023</div>
       </div>
-    </div>
-  </div>
+
+
+   <!-- Карточка 3 -->
+      <div class="pin-card" id="card3">
+        <div class="photo-content">
+          <img src="images/photo_reshetnik_luv.jpg" alt="Парк" 
+               onclick="showText('card3', 'Женечка и Кирюха решили пойти погулять на решеник (прудик за одинбургом), устроили друг другу фотосессию, пускай Кирюха нифига фоткать не умеет, но Женя ему все оъяснила и показала, получилось клево, ну и вот такая мили фоточка.', '13.07.2023')">
+          <div class="text-bubble" id="bubble3">
+            <span class="close" onclick="hideText('card2')">&times;</span>
+            <div class="typed-text" id="typed3"></div>
+          </div>
+        </div>
+        <div class="date">13.07.2023</div>
+      </div>
   
+
+   <!-- Карточка 4 -->
+      <div class="pin-card" id="card4">
+        <div class="photo-content">
+          <img src="images/photo_zhenechka.jpg" alt="Парк" 
+               onclick="showText('card4', 'А вот такие фотки получились у Женечки, она придумала супер схему, с часов смотрела как стоит кадр и все такое, а Кирюха держал телефон и менял кадры, чтобы все получилось так красиво. Женечка самая лучшая девочка.', '13.07.2023')">
+          <div class="text-bubble" id="bubble4">
+            <span class="close" onclick="hideText('card2')">&times;</span>
+            <div class="typed-text" id="typed4"></div>
+          </div>
+        </div>
+        <div class="date">13.07.2023</div>
+      </div>
+     </div>
+    </div>
+
+  <!-- Затемнение фона -->
+  <div class="overlay"></div>
+
   <script src="script.js"></script>
 </body>
 </html>

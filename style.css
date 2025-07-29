@@ -1,9 +1,14 @@
-/* Основные стили */
+/* Базовые стили */
 body {
   font-family: 'Arial', sans-serif;
   background: #f5f5f5;
   margin: 0;
   padding: 40px 20px;
+  transition: background 0.4s ease;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 .container {
@@ -15,6 +20,7 @@ h1 {
   text-align: center;
   color: #ff6b6b;
   margin-bottom: 30px;
+  font-size: 2.5em;
 }
 
 /* Сетка карточек */
@@ -24,20 +30,26 @@ h1 {
   gap: 30px;
 }
 
-/* Карточка с фото */
+/* Карточка */
 .pin-card {
   background: white;
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   overflow: visible;
   position: relative;
-  transition: transform 0.3s;
+  transition: transform 0.3s ease, z-index 0s 0.3s;
 }
 
-.pin-card:hover {
+.pin-card.active {
+  z-index: 20;
+  transition: transform 0.3s ease, z-index 0s;
+}
+
+.pin-card:hover:not(.active) {
   transform: translateY(-5px);
 }
 
+/* Фото */
 .photo-content {
   position: relative;
   padding: 8px 8px 0 8px;
@@ -48,52 +60,104 @@ h1 {
   border-radius: 8px 8px 0 0;
   display: block;
   cursor: pointer;
-  transition: filter 0.3s;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Пузырь с текстом */
+.pin-card.active .photo-content img {
+  transform: scale(0.96);
+  filter: brightness(0.93);
+}
+
+/* Окошко с текстом */
 .text-bubble {
-  position: absolute;
-  left: 105%;
-  top: 0;
-  width: 300px;
+  position: fixed;
+  max-width: 350px;
+  width: calc(100vw - 40px);
   background: white;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  padding: 20px;
+  padding: 25px;
   opacity: 0;
-  transform: translateX(-20px);
-  transition: all 0.3s;
-  z-index: 10;
+  z-index: 15;
   display: none;
+  transform: translateY(15px) scale(0.98);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.4);
 }
 
 .text-bubble.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0) scale(1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
   display: block;
 }
 
+/* Кнопка закрытия */
 .close {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 15px;
+  right: 20px;
   font-size: 24px;
   cursor: pointer;
   color: #888;
+  transition: color 0.2s ease;
 }
 
+.close:hover {
+  color: #ff6b6b;
+}
+
+/* Текст */
 .typed-text {
   font-size: 16px;
   line-height: 1.6;
   color: #333;
-  padding-top: 15px;
+  padding-top: 10px;
 }
 
+/* Дата */
 .date {
-  padding: 12px;
+  padding: 15px;
   text-align: center;
   color: #777;
   border-top: 1px solid #eee;
   font-size: 14px;
+}
+
+/* Затемнение фона */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}
+
+.overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Адаптивность */
+@media (min-width: 768px) {
+  .text-bubble {
+    width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-bubble {
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, calc(-50% + 20px)) scale(0.98) !important;
+  }
+  
+  .text-bubble.active {
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
 }
