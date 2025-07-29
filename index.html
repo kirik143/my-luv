@@ -2,20 +2,55 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Наш уголок ❤️</title>
+  <title>Наши моменты</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Хотэлочки 🫥</h1>
-    <p>143</p>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Наши моменты ✨</h1>
+    </header>
 
-  <img src="images/photo_in_car.jpg" alt="О, любофф" class="main-photo">
+    <div class="pinterest-grid">
+      <!-- Карточка 1 -->
+      <div class="pin-card" onclick="openModal('photo_in_car.jpg', 'Это был четверг, мы с тобой решили поехать домой на машине,было прикольно, видосы всякие снимали, музыку слушали, кайфовали', '24.07.2025')">
+        <div class="photo-frame">
+          <img src="images/photo1.jpg" alt="Поездка домой">
+        </div>
+        <div class="date">15.07.2023</div>
+      </div>
 
-  <div class="menu">
-    <a href="gallery.html">Галерея</a>
-    <a href="wishes.html">Подарки</a>
+      <!-- Карточка 2 -->
+      <div class="pin-card" onclick="openModal('images/photo_reshetnik_kirya_solo.jpg', 'Кирюхе фотосессию устроили, это были лучшие фото в его жизни, а эта самая крутая, еще и пар чет разлетелся', '13.07.2025')">
+        <div class="photo-frame">
+          <img src="images/photo2.jpg" alt="Парк">
+        </div>
+        <div class="date">22.08.2023</div>
+      </div>
+      
+      <!-- Добавь остальные фото -->
+	<!-- Карточка 3 -->
+      <div class="pin-card" onclick="openModal('images/photo_reshetnik_luv.jpg', 'День был классный, сделали много клевых фото, потом кирюха полез куда-то наверх и руку порезал, а еще мошкары было доыига, загрызли', '13.07.2025')">
+        <div class="photo-frame">
+          <img src="images/photo2.jpg" alt="Парк">
+        </div>
+        <div class="date">22.08.2023</div>
+      </div>
+    </div>
   </div>
+
+  <!-- Модальное окно -->
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" src="" alt="">
+      <div class="modal-text">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDate"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
