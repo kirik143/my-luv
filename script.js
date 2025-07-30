@@ -1,119 +1,104 @@
-let currentCard = null;
+document.addEventListener('DOMContentLoaded', function() {
+  // Закрытие по клику на оверлей
+  document.querySelector('.overlay').addEventListener('click', hideAllTextBubbles);
+  
+  // Закрытие по ESC
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hideAllTextBubbles();
+  });
+});
+
+let currentActiveCard = null;
 let typingInterval = null;
 
 function showText(cardId, text, date) {
-  if (currentCard) hideText(currentCard);
-  clearInterval(typingInterval);
+  // Блокируем скролл страницы
+  document.body.style.overflow = 'hidden';
+  
+  // Скрываем предыдущее окошко
+  hideAllTextBubbles();
   
   const card = document.getElementById(cardId);
-  const bubble = document.getElementById(`bubble${cardId.slice(4)}`);
+  const bubbleId = `bubble${cardId.replace('card', '')}`;
+  const bubble = document.getElementById(bubbleId);
   const overlay = document.querySelector('.overlay');
-  const img = card.querySelector('img');
   
-  // Определение свободного пространства
-  const imgRect = img.getBoundingClientRect();
-  const spaceRight = window.innerWidth - imgRect.right - 30;
-  const spaceLeft = imgRect.left - 30;
+  if (!card || !bubble || !overlay) return;
   
-  // Умное позиционирование
-  if (window.innerWidth <= 768) {
-    // Для мобильных - всегда по центру
-    bubble.style.left = '50%';
-    bubble.style.right = 'auto';
-    bubble.style.top = '50%';
-  } else {
-    // Для десктопа - выбираем сторону
-    if (spaceRight >= 350 || spaceRight > spaceLeft) {
-      // Показываем справа
-      bubble.style.left = `${imgRect.right + 20}px`;
-      bubble.style.right = 'auto';
+  // Устанавливаем дату и текст
+  bubble.querySelector('.modal-date').textContent = date;
+  const typedElement = bubble.querySelector('.typed-text');
+  typedElement.innerHTML = '<span class="typing-cursor"></span>';
+  
+  // Позиционируем окошко только слева/справа
+  positionBubble(card, bubble);
+  
+  // Показываем элементы
+  overlay.classList.add('active');
+  bubble.classList.add('active');
+  currentActiveCard = cardId;
+  
+  // Анимация печати
+  let i = 0;
+  const typingSpeed = 30;
+  
+  function typeWriter() {
+    if (i < text.length) {
+      const cursor = typedElement.querySelector('.typing-cursor');
+      cursor.insertAdjacentText('beforebegin', text.charAt(i));
+      i++;
+      typingInterval = setTimeout(typeWriter, typingSpeed);
     } else {
-      // Показываем слева
-      bubble.style.right = `${window.innerWidth - imgRect.left + 20}px`;
-      bubble.style.left = 'auto';
+      const cursor = typedElement.querySelector('.typing-cursor');
+      if (cursor) cursor.remove();
     }
-    
-    // Вертикальная корректировка
-    bubble.style.top = `${Math.min(
-      imgRect.top,
-      window.innerHeight - bubble.offsetHeight - 20
-    )}px`;
   }
   
-  // Анимации
-  overlay.style.display = 'block';
-  setTimeout(() => overlay.classList.add('active'), 10);
-  card.classList.add('active');
-  currentCard = cardId;
-  
-  setTimeout(() => {
-    bubble.style.display = 'block';
-    setTimeout(() => bubble.classList.add('active'), 10);
-    
-    const typedElement = bubble.querySelector('.typed-text');
-    typedElement.innerHTML = `<p style="color:#777;margin-bottom:15px">${date}</p>`;
-    
-    let i = 0;
-    typingInterval = setInterval(() => {
-      if (i < text.length) {
-        typedElement.innerHTML += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 50);
-  }, 200);
+  typeWriter();
 }
 
-function hideText(cardId) {
-  const card = document.getElementById(cardId);
-  const bubble = document.getElementById(`bubble${cardId.slice(4)}`);
-  const overlay = document.querySelector('.overlay');
+function positionBubble(card, bubble) {
+  const cardRect = card.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
   
-  bubble.classList.remove('active');
-  overlay.classList.remove('active');
+  // Проверяем, где больше места: слева или справа
+  const spaceRight = viewportWidth - cardRect.right;
+  const spaceLeft = cardRect.left;
   
-  setTimeout(() => {
-    bubble.style.display = 'none';
-    overlay.style.display = 'none';
-    card.classList.remove('active');
-    currentCard = null;
-  }, 400);
+  if (spaceRight >= spaceLeft && spaceRight >= 350) {
+    // Показываем справа
+    bubble.style.left = `${cardRect.right + 20}px`;
+    bubble.style.top = `${cardRect.top}px`;
+    bubble.style.right = 'auto';
+  } else {
+    // Показываем слева
+    bubble.style.right = `${viewportWidth - cardRect.left + 20}px`;
+    bubble.style.top = `${cardRect.top}px`;
+    bubble.style.left = 'auto';
+  }
+  
+  // Фиксируем позицию (не даем уходить за верх/низ)
+  bubble.style.bottom = 'auto';
 }
 
-// Закрытие по клику на фон
-document.querySelector('.overlay').addEventListener('click', () => {
-  if (currentCard) hideText(currentCard);
-});
+function hideAllTextBubbles() {
+  // Разблокируем скролл
+  document.body.style.overflow = 'auto';
+  
+  clearTimeout(typingInterval);
+  document.querySelectorAll('.text-bubble').forEach(bubble => {
+    bubble.classList.remove('active');
+  });
+  document.querySelector('.overlay').classList.remove('active');
+  currentActiveCard = null;
+}
 
-// Ресайз
-window.addEventListener('resize', () => {
-  if (currentCard) {
-    const card = document.getElementById(currentCard);
-    const bubble = document.getElementById(`bubble${currentCard.slice(4)}`);
-    const img = card.querySelector('img');
-    const imgRect = img.getBoundingClientRect();
-    
-    if (window.innerWidth <= 768) {
-      bubble.style.left = '50%';
-      bubble.style.right = 'auto';
-      bubble.style.top = '50%';
-    } else {
-      const spaceRight = window.innerWidth - imgRect.right - 30;
-      const spaceLeft = imgRect.left - 30;
-      
-      if (spaceRight >= 350 || spaceRight > spaceLeft) {
-        bubble.style.left = `${imgRect.right + 20}px`;
-        bubble.style.right = 'auto';
-      } else {
-        bubble.style.right = `${window.innerWidth - imgRect.left + 20}px`;
-        bubble.style.left = 'auto';
-      }
-      
-      bubble.style.top = `${Math.min(
-        imgRect.top,
-        window.innerHeight - bubble.offsetHeight - 20
-      )}px`;
-    }
+// Репозиционируем при ресайзе
+window.addEventListener('resize', function() {
+  if (currentActiveCard) {
+    const card = document.getElementById(currentActiveCard);
+    const bubbleId = `bubble${currentActiveCard.replace('card', '')}`;
+    const bubble = document.getElementById(bubbleId);
+    if (card && bubble) positionBubble(card, bubble);
   }
 });

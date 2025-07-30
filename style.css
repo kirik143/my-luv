@@ -1,14 +1,18 @@
-/* Базовые стили */
+/* Основные стили с масштабом 75% */
+html {
+  zoom: 0.75;          /* Для Chrome, Edge */
+  transform: scale(0.75); /* Для Firefox */
+  transform-origin: 0 0;
+  width: 133.33%;      /* Компенсируем масштаб */
+}
+
 body {
   font-family: 'Arial', sans-serif;
   background: #f5f5f5;
   margin: 0;
   padding: 40px 20px;
-  transition: background 0.4s ease;
-}
-
-body.modal-open {
-  overflow: hidden;
+  overflow-x: hidden;
+  width: 100%; /* Фикс для масштаба */
 }
 
 .container {
@@ -27,68 +31,81 @@ h1 {
 .pinterest-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
+  gap: 20px;
+  align-items: start;
 }
 
-/* Карточка */
+/* Стили карточек */
 .pin-card {
   background: white;
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-  overflow: visible;
-  position: relative;
-  transition: transform 0.3s ease, z-index 0s 0.3s;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
-.pin-card.active {
-  z-index: 20;
-  transition: transform 0.3s ease, z-index 0s;
-}
-
-.pin-card:hover:not(.active) {
+.pin-card:hover {
   transform: translateY(-5px);
 }
 
-/* Фото */
-.photo-content {
-  position: relative;
-  padding: 8px 8px 0 8px;
-}
-
+/* Изображения */
 .photo-content img {
   width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: cover;
   border-radius: 8px 8px 0 0;
   display: block;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.pin-card.active .photo-content img {
-  transform: scale(0.96);
-  filter: brightness(0.93);
+/* Дата */
+.date {
+  padding: 15px;
+  text-align: center;
+  color: #777;
+  border-top: 1px solid #eee;
+  font-size: 14px;
 }
 
-/* Окошко с текстом */
+/* Текстовое окошко */
 .text-bubble {
   position: fixed;
-  max-width: 350px;
-  width: calc(100vw - 40px);
+  width: 350px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
   padding: 25px;
+  z-index: 1000;
   opacity: 0;
-  z-index: 15;
-  display: none;
-  transform: translateY(15px) scale(0.98);
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.4);
+  visibility: hidden;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
 }
 
 .text-bubble.active {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  display: block;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* Затемнение фона */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Кнопка закрытия */
@@ -106,58 +123,62 @@ h1 {
   color: #ff6b6b;
 }
 
-/* Текст */
+/* Текст в окошке */
 .typed-text {
   font-size: 16px;
   line-height: 1.6;
   color: #333;
-  padding-top: 10px;
+  min-height: 20px;
 }
 
-/* Дата */
-.date {
-  padding: 15px;
-  text-align: center;
-  color: #777;
-  border-top: 1px solid #eee;
-  font-size: 14px;
+.modal-date {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
-/* Затемнение фона */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(8px);
-  z-index: 10;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.4s ease-out;
+/* Анимация курсора */
+.typing-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: #ff6b6b;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+  vertical-align: middle;
 }
 
-.overlay.active {
-  display: block;
-  opacity: 1;
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* Адаптивность */
-@media (min-width: 768px) {
-  .text-bubble {
-    width: 350px;
-  }
-}
-
 @media (max-width: 768px) {
+  html {
+    zoom: 1;
+    transform: none;
+    width: 100%;
+  }
+
+  .pinterest-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
   .text-bubble {
+    width: 90%;
     left: 50% !important;
     top: 50% !important;
-    transform: translate(-50%, calc(-50% + 20px)) scale(0.98) !important;
+    transform: translate(-50%, -50%) scale(0.95) !important;
   }
   
   .text-bubble.active {
     transform: translate(-50%, -50%) scale(1) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pinterest-grid {
+    grid-template-columns: 1fr;
   }
 }

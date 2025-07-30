@@ -5,70 +5,100 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Наши моменты</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
   <div class="container">
     <h1>Наши моменты ✨</h1>
+    <!-- Затемнение фона -->
+    <div class="overlay"></div>
     
     <div class="pinterest-grid">
       <!-- Карточка 1 -->
       <div class="pin-card" id="card1">
         <div class="photo-content">
-          <img src="images/photo_in_car.jpg" alt="Поездка домой" 
+          <img src="images/photo_1.jpg" alt="Поездка домой" 
                onclick="showText('card1', 'Это был четверг, Женечка очень устала и они с Кирюхой решили поехать домой на машине, было клево, музыку слушали, обнимались, видосы всякие снимали, прям такая мили мили поездка.', '24.07.2025')">
           <div class="text-bubble" id="bubble1">
             <span class="close" onclick="hideText('card1')">&times;</span>
+            <p class="modal-date"></p>
             <div class="typed-text" id="typed1"></div>
           </div>
         </div>
-        <div class="date">24.07.2023</div>
+        <div class="date">24.07.2025</div>
       </div>
-      
+
       <!-- Карточка 2 -->
       <div class="pin-card" id="card2">
         <div class="photo-content">
-          <img src="images/photo_reshetnik_kirya_solo.jpg" alt="Парк" 
-               onclick="showText('card2', 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.', '13.07.2023')">
+          <img src="images/photo_2.jpg" alt="Парк" 
+               onclick="showText('card2', 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.', '13.07.2025')">
           <div class="text-bubble" id="bubble2">
             <span class="close" onclick="hideText('card2')">&times;</span>
+            <p class="modal-date"></p>
             <div class="typed-text" id="typed2"></div>
           </div>
         </div>
-        <div class="date">13.07.2023</div>
+        <div class="date">13.07.2025</div>
       </div>
 
-
-   <!-- Карточка 3 -->
+      <!-- Карточка 3 -->
       <div class="pin-card" id="card3">
         <div class="photo-content">
-          <img src="images/photo_reshetnik_luv.jpg" alt="Парк" 
-               onclick="showText('card3', 'Женечка и Кирюха решили пойти погулять на решеник (прудик за одинбургом), устроили друг другу фотосессию, пускай Кирюха нифига фоткать не умеет, но Женя ему все оъяснила и показала, получилось клево, ну и вот такая мили фоточка.', '13.07.2023')">
+          <img src="images/photo_3.jpg" alt="Парк" 
+               onclick="showText('card3', 'Женечка и Кирюха решили пойти погулять на решеник (прудик за одинбургом), устроили друг другу фотосессию, пускай Кирюха нифига фоткать не умеет, но Женя ему все оъяснила и показала, получилось клево, ну и вот такая мили фоточка.', '13.07.2025')">
           <div class="text-bubble" id="bubble3">
-            <span class="close" onclick="hideText('card2')">&times;</span>
+            <span class="close" onclick="hideText('card3')">&times;</span>
+            <p class="modal-date"></p>
             <div class="typed-text" id="typed3"></div>
           </div>
         </div>
-        <div class="date">13.07.2023</div>
+        <div class="date">13.07.2025</div>
       </div>
   
-
-   <!-- Карточка 4 -->
+      <!-- Карточка 4 -->
       <div class="pin-card" id="card4">
         <div class="photo-content">
-          <img src="images/photo_zhenechka.jpg" alt="Парк" 
-               onclick="showText('card4', 'А вот такие фотки получились у Женечки, она придумала супер схему, с часов смотрела как стоит кадр и все такое, а Кирюха держал телефон и менял кадры, чтобы все получилось так красиво. Женечка самая лучшая девочка.', '13.07.2023')">
+          <img src="images/photo_4.jpg" alt="Парк" 
+               onclick="showText('card4', 'А вот такие фотки получились у Женечки, она придумала супер схему, с часов смотрела как стоит кадр и все такое, а Кирюха держал телефон и менял кадры, чтобы все получилось так красиво. Женечка самая лучшая девочка.', '13.07.2025')">
           <div class="text-bubble" id="bubble4">
-            <span class="close" onclick="hideText('card2')">&times;</span>
+            <span class="close" onclick="hideText('card4')">&times;</span>
+            <p class="modal-date"></p>
             <div class="typed-text" id="typed4"></div>
           </div>
         </div>
-        <div class="date">13.07.2023</div>
+        <div class="date">13.07.2025</div>
       </div>
-     </div>
-    </div>
 
-  <!-- Затемнение фона -->
-  <div class="overlay"></div>
+      <!-- Карточка 5 -->
+      <div class="pin-card" id="card5">
+        <div class="photo-content">
+          <img src="images/photo_5.jpg" alt="Парк" 
+               onclick="showText('card5', 'Кирюха и Женечка гуляли, ну и само собой проголодались, поэтому решили зайти в мак, а пока Кирюха куда-то отходил, Евгения Владимировна время не теряла.', '02.05.2025')">
+          <div class="text-bubble" id="bubble5">
+            <span class="close" onclick="hideText('card5')">&times;</span>
+            <p class="modal-date"></p>
+            <div class="typed-text" id="typed5"></div>
+          </div>
+        </div>
+        <div class="date">02.05.2025</div>
+      </div>
+
+      <!-- Карточка 6 -->
+      <div class="pin-card" id="card6">
+        <div class="photo-content">
+          <img src="images/photo_6.jpg" alt="Парк" 
+               onclick="showText('card6', 'Кирюха и Женечка болтали по видео, такое было очень часто и подолго, и однажды Женечка проголодалась и пошла кушать блинчики, а Кирюха не долго думая сделал скриншот. Теперь есть такая забавная фоточка.', '05.05.2025')">
+          <div class="text-bubble" id="bubble6">
+            <span class="close" onclick="hideText('card6')">&times;</span>
+            <p class="modal-date"></p>
+            <div class="typed-text" id="typed6"></div>
+          </div>
+        </div>
+        <div class="date">05.05.2025</div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
