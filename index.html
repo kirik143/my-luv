@@ -1,105 +1,402 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Наши моменты</title>
-  <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пара влюбленных дураков</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #caa885;
+            color: #FFF;
+        }
+        
+        .title {
+            font-family: 'Playfair Display', serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .photo-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-content {
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .typing-text {
+            border-right: 2px solid;
+            white-space: pre-wrap;
+            overflow: hidden;
+            animation: blinkCursor 0.7s infinite;
+        }
+        
+        @keyframes blinkCursor {
+            from { border-right-color: transparent; }
+            to { border-right-color: #334155; }
+        }
+        
+        .subtitle {
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <h1>Наши моменты ✨</h1>
-    <!-- Затемнение фона -->
-    <div class="overlay"></div>
-    
-    <div class="pinterest-grid">
-      <!-- Карточка 1 -->
-      <div class="pin-card" id="card1">
-        <div class="photo-content">
-          <img src="images/photo_1.jpg" alt="Поездка домой" 
-               onclick="showText('card1', 'Это был четверг, Женечка очень устала и они с Кирюхой решили поехать домой на машине, было клево, музыку слушали, обнимались, видосы всякие снимали, прям такая мили мили поездка.', '24.07.2025')">
-          <div class="text-bubble" id="bubble1">
-            <span class="close" onclick="hideText('card1')">&times;</span>
-            <p class="modal-date"></p>
-            <div class="typed-text" id="typed1"></div>
-          </div>
-        </div>
-        <div class="date">24.07.2025</div>
-      </div>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Шапка -->
+        <header class="text-center mb-12">
+            <h1 class="title text-4xl md:text-5xl font-semibold text-white mb-4">Пара влюбленных дураков</h1>
+            <p class="subtitle text-lg text-white max-w-2xl mx-auto">
+                Мягкие тела где-то без одежд<br>
+                Подарю тебе листья и тетрадь<br>
+                Где писал твоё пару тысяч раз<br>
+                Имя на стекле
+            </p>
+        </header>
+        
+        <!-- Photo Grid -->
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Фото 1 -->
+            <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(1)">
+                <img src="images/photo_1.jpg" alt="Покатушки" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Покатушки</h3>
+                    <p class="text-sm text-green-600">24.07.2025</p>
+                </div>
+            </div>
+            
+	   <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(2)">
+                <img src="images/photo_2.jpg" alt="Курыт" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Курыт</h3>
+                    <p class="text-sm text-green-600">13.07.2025</p>
+                </div>
+            </div>
+           
+            <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(3)">
+                <img src="images/photo_3.jpg" alt="Мили Женечка и Киря" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Мили Женечка и Киря</h3>
+                    <p class="text-sm text-green-600">13.07.2025</p>
+                </div>
+            </div>
 
-      <!-- Карточка 2 -->
-      <div class="pin-card" id="card2">
-        <div class="photo-content">
-          <img src="images/photo_2.jpg" alt="Парк" 
-               onclick="showText('card2', 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.', '13.07.2025')">
-          <div class="text-bubble" id="bubble2">
-            <span class="close" onclick="hideText('card2')">&times;</span>
-            <p class="modal-date"></p>
-            <div class="typed-text" id="typed2"></div>
-          </div>
-        </div>
-        <div class="date">13.07.2025</div>
-      </div>
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(4)">
+                <img src="images/photo_4.jpg" alt="Как же она красива, необъянимо" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Как же она красива, необъянимо</h3>
+                    <p class="text-sm text-green-600">13.07.2025</p>
+                </div>
+            </div>
 
-      <!-- Карточка 3 -->
-      <div class="pin-card" id="card3">
-        <div class="photo-content">
-          <img src="images/photo_3.jpg" alt="Парк" 
-               onclick="showText('card3', 'Женечка и Кирюха решили пойти погулять на решеник (прудик за одинбургом), устроили друг другу фотосессию, пускай Кирюха нифига фоткать не умеет, но Женя ему все оъяснила и показала, получилось клево, ну и вот такая мили фоточка.', '13.07.2025')">
-          <div class="text-bubble" id="bubble3">
-            <span class="close" onclick="hideText('card3')">&times;</span>
-            <p class="modal-date"></p>
-            <div class="typed-text" id="typed3"></div>
-          </div>
-        </div>
-        <div class="date">13.07.2025</div>
-      </div>
-  
-      <!-- Карточка 4 -->
-      <div class="pin-card" id="card4">
-        <div class="photo-content">
-          <img src="images/photo_4.jpg" alt="Парк" 
-               onclick="showText('card4', 'А вот такие фотки получились у Женечки, она придумала супер схему, с часов смотрела как стоит кадр и все такое, а Кирюха держал телефон и менял кадры, чтобы все получилось так красиво. Женечка самая лучшая девочка.', '13.07.2025')">
-          <div class="text-bubble" id="bubble4">
-            <span class="close" onclick="hideText('card4')">&times;</span>
-            <p class="modal-date"></p>
-            <div class="typed-text" id="typed4"></div>
-          </div>
-        </div>
-        <div class="date">13.07.2025</div>
-      </div>
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(5)">
+                <img src="images/photo_5.jpg" alt="Мили жулик" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Мили жулик</h3>
+                    <p class="text-sm text-green-600">02.05.2025</p>
+                </div>
+            </div>
 
-      <!-- Карточка 5 -->
-      <div class="pin-card" id="card5">
-        <div class="photo-content">
-          <img src="images/photo_5.jpg" alt="Парк" 
-               onclick="showText('card5', 'Кирюха и Женечка гуляли, ну и само собой проголодались, поэтому решили зайти в мак, а пока Кирюха куда-то отходил, Евгения Владимировна время не теряла.', '02.05.2025')">
-          <div class="text-bubble" id="bubble5">
-            <span class="close" onclick="hideText('card5')">&times;</span>
-            <p class="modal-date"></p>
-            <div class="typed-text" id="typed5"></div>
-          </div>
-        </div>
-        <div class="date">02.05.2025</div>
-      </div>
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(6)">
+                <img src="images/photo_6.jpg" alt="Время подкрепиться" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Время подкрепиться</h3>
+                    <p class="text-sm text-green-600">05.03.2025</p>
+                </div>
+            </div>
 
-      <!-- Карточка 6 -->
-      <div class="pin-card" id="card6">
-        <div class="photo-content">
-          <img src="images/photo_6.jpg" alt="Парк" 
-               onclick="showText('card6', 'Кирюха и Женечка болтали по видео, такое было очень часто и подолго, и однажды Женечка проголодалась и пошла кушать блинчики, а Кирюха не долго думая сделал скриншот. Теперь есть такая забавная фоточка.', '05.05.2025')">
-          <div class="text-bubble" id="bubble6">
-            <span class="close" onclick="hideText('card6')">&times;</span>
-            <p class="modal-date"></p>
-            <div class="typed-text" id="typed6"></div>
-          </div>
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(7)">
+                <img src="images/photo_7.jpg" alt="Ждун" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Ждун</h3>
+                    <p class="text-sm text-green-600">05.05.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(8)">
+                <img src="images/photo_8.jpg" alt="Семейка Адамс" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Семейка Адамс</h3>
+                    <p class="text-sm text-green-600">11.06.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(9)">
+                <img src="images/photo_9.jpg" alt="Ну модееель" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Ну модееель</h3>
+                    <p class="text-sm text-green-600">25.01.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(10)">
+                <img src="images/photo_10.jpg" alt="Братское" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Братское</h3>
+                    <p class="text-sm text-green-600">10.03.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(11)">
+                <img src="images/photo_11.jpg" alt="Ждун v.2" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Ждун v.2</h3>
+                    <p class="text-sm text-green-600">18.02.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(12)">
+                <img src="images/photo_12.jpg" alt="Хитрый лис" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Хитрый лис</h3>
+                    <p class="text-sm text-green-600">28.06.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(13)">
+                <img src="images/photo_13.jpg" alt="Я их люблю не за что-то мой брат..." class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Я их люблю не за что-то мой брат...</h3>
+                    <p class="text-sm text-green-600">12.05.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(14)">
+                <img src="images/photo_14.jpg" alt="Маляры" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Маляры</h3>
+                    <p class="text-sm text-green-600">17.05.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(15)">
+                <img src="images/photo_15.jpg" alt="Начало!" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Начало!</h3>
+                    <p class="text-sm text-green-600">01.03.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(16)">
+                <img src="images/photo_16.jpg" alt="Доброе утро!" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Доброе утро!</h3>
+                    <p class="text-sm text-green-600">16.05.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(17)">
+                <img src="images/photo_17.jpg" alt="Мили дорога" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Мили дорога</h3>
+                    <p class="text-sm text-green-600">22.05.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(18)">
+                <img src="images/photo_18.jpg" alt="Евгения Владимировна В Ростех" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Евгения Владимировна в Ростех</h3>
+                    <p class="text-sm text-green-600">17.03.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(19)">
+                <img src="images/photo_19.jpg" alt="У свекрухи на ДР" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">У свекрухи на ДР</h3>
+                    <p class="text-sm text-green-600">20.02.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(20)">
+                <img src="images/photo_20.jpg" alt="Царь и Царевна горы" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Царь и Царевна горы</h3>
+                    <p class="text-sm text-green-600">10.06.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(21)">
+                <img src="images/photo_21.jpg" alt="Как приручить Хорька" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Как приручить хорька</h3>
+                    <p class="text-sm text-green-600">20.05.2025</p>
+                </div>
+            </div>
+
+	    <div class="photo-card bg-white rounded-xl overflow-hidden shadow-md cursor-pointer" onclick="openModal(22)">
+                <img src="images/photo_22.jpg" alt="Friendly Thug 52 NGG" class="w-full h-64 object-cover">
+                <div class="p-4 bg-blue-50">
+                    <h3 class="font-medium text-blue-600">Friendly Thug 52 NGG</h3>
+                    <p class="text-sm text-green-600">12.05.2025</p>
+                </div>
+            </div>
         </div>
-        <div class="date">05.05.2025</div>
-      </div>
     </div>
-  </div>
-
-  <script src="script.js"></script>
+    
+       <!-- Modal -->
+    <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 opacity-0 invisible" id="photoModal">
+        <div class="modal-content bg-white rounded-xl max-w-3xl w-full mx-4 transform translate-y-10">
+            <div class="relative">
+                <button class="absolute -top-4 -right-4 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors z-10" onclick="closeModal()">
+                    <i class="fas fa-times text-blue-600"></i>
+                </button>
+                
+                <div class="grid md:grid-cols-2 gap-0">
+                    <div class="h-64 md:h-auto">
+                        <img id="modalImage" src="" alt="" class="w-full h-full object-cover rounded-tl-xl md:rounded-bl-xl md:rounded-tr-none">
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 id="modalTitle" class="title text-2xl font-semibold text-blue-600 mb-2"></h3>
+                        <p id="modalDate" class="text-sm text-green-600 mb-4"></p>
+                        <div id="modalText" class="typing-text text-gray-700 leading-relaxed h-40 overflow-y-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <script>
+        // Данные для фото (остаются без изменений)
+        const photos = [
+            {
+                id: 1,
+                title: "Покатушки",
+                date: "24.07.2025",
+                image: "images/photo_1.jpg",
+                description: "Это был четверг, Женечка очень устала и они с Кирюхой решили поехать домой на машине, было клево, музыку слушали, обнимались, видосы всякие снимали, прям такая мили мили поездка."
+            },
+            {
+                id: 2,
+                title: "Курыт",
+                date: "13.07.2025",
+                image: "images/photo_2.jpg",
+                description: 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.'
+            },
+            {
+                id: 3,
+                title: "Мили Женечка и Киря",
+                date: "13.07.2025",
+                image: "images/photo_3.jpg",
+                description: 'Женечка и Кирюха решили пойти погулять на решеник (прудик за одинбургом), устроили друг другу фотосессию, пускай Кирюха нифига фоткать не умеет, но Женя ему все оъяснила и показала, получилось клево, ну и вот такая мили фоточка.'
+            },
+            {
+                id: 4,
+                title: "Как же она красива, необъяснимо",
+                date: "13.07.2025",
+                image: "images/photo_4.jpg",
+                description: 'А вот такие фотки получились у Женечки, она придумала супер схему, с часов смотрела как стоит кадр и все такое, а Кирюха держал телефон и менял кадры, чтобы все получилось так красиво. Женечка самая лучшая девочка.'
+            },            {
+                id: 5,
+                title: "Мили жулик",
+                date: "02.05.2025",
+                image: "images/photo_5.jpg",
+                description: 'Кирюха и Женечка гуляли, ну и само собой проголодались, поэтому решили зайти в мак, а пока Кирюха куда-то отходил, Евгения Владимировна время не теряла.'
+            },            {
+                id: 6,
+                title: "Время подкрепиться",
+                date: "05.03.2025",
+                image: "images/photo_6.jpg",
+                description: 'Кирюха и Женечка болтали по видео, такое было очень часто и подолго, и однажды Женечка проголодалась и пошла кушать блинчики, а Кирюха не долго думая сделал скриншот. Теперь есть такая забавная фоточка.'
+            },            {
+                id: 7,
+                title: "Курыт",
+                date: "13.07.2025",
+                image: "images/photo_2.jpg",
+                description: 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.'
+            },            {
+                id: 8,
+                title: "Курыт",
+                date: "13.07.2025",
+                image: "images/photo_2.jpg",
+                description: 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.'
+            },            {
+                id: 8,
+                title: "Курыт",
+                date: "13.07.2025",
+                image: "images/photo_2.jpg",
+                description: 'Женечка сказала как лучше будет встать и этот Джони все послушно делал, в итоге получились лучшие в его жизни фотки, а вот эта особенно прекрасна, потому что еще и пар клево разлетелся.'
+            },
+            {
+                id: 27,
+                title: "Название фото 27",
+                date: "Дата фото 27",
+                image: "images/photo_27.jpg",
+                description: "Описание фото 27."
+            }
+        ];
+        
+        // Функции для модального окна (без изменений)
+        function openModal(photoId) {
+            const modal = document.getElementById('photoModal');
+            const photo = photos.find(p => p.id === photoId);
+            
+            if (photo) {
+                document.getElementById('modalImage').src = photo.image;
+                document.getElementById('modalTitle').textContent = photo.title;
+                document.getElementById('modalDate').textContent = photo.date;
+                
+                const textElement = document.getElementById('modalText');
+                textElement.textContent = '';
+                textElement.style.animation = 'blinkCursor 0.7s infinite';
+                textElement.style.borderRight = '2px solid';
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                let i = 0;
+                const typingInterval = setInterval(() => {
+                    if (i < photo.description.length) {
+                        textElement.textContent += photo.description.charAt(i);
+                        i++;
+                        textElement.scrollTop = textElement.scrollHeight;
+                    } else {
+                        clearInterval(typingInterval);
+                        textElement.style.animation = 'none';
+                        textElement.style.borderRight = 'none';
+                    }
+                }, 50);
+            }
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
