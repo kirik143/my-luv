@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пара влюбленных дураков</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -14,10 +15,13 @@
             font-family: 'Rosariumt', sans-serif;
             background-color: #caa885;
             color: #FFF;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         
         .title {
-            font-family: 'Rosariumt', serif;
+            font-family: 'Playfair Display', serif;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
         
@@ -64,10 +68,18 @@
             font-style: italic;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
+        
+        .footer-text {
+            font-family: 'Montserrat', sans-serif;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body class="min-h-screen">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-8 flex-grow">
         <!-- Шапка -->
         <header class="text-center mb-12">
             <h1 class="title text-4xl md:text-5xl font-semibold text-white mb-4">Пара влюбленных дураков</h1>
@@ -280,6 +292,11 @@
             </div>
         </div>
     </div>
+    
+    <!-- Футер -->
+    <footer class="footer-text">
+        © 2025 Пара влюбленных дураков
+    </footer>
     
     <!-- Modal -->
     <div class="modal fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 opacity-0 invisible" id="photoModal">
